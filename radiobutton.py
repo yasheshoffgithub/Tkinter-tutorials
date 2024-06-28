@@ -1,0 +1,16 @@
+import tkinter
+window=tkinter.Tk()
+window.title("RadioButton tutorial")
+window.geometry('340x440')
+def radioPressed():
+    print(radiovar.get())
+radiovar=tkinter.StringVar() #stores the value of radiobutton(June Month,etc.)
+radio0=tkinter.Radiobutton(window,variable=radiovar,text="June",value="June Month",command=radioPressed)
+radio1=tkinter.Radiobutton(window,variable=radiovar,text="July",value="July Month",command=radioPressed)
+radio2=tkinter.Radiobutton(window,variable=radiovar,text="August",value="Aug Month",command=radioPressed)
+radio3=tkinter.Radiobutton(window,variable=radiovar,text="September",value="Sept Month",command=radioPressed)
+radio0.pack()
+radio1.pack()
+radio2.pack()
+radio3.pack()
+window.mainloop()
