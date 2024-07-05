@@ -2,11 +2,14 @@ import tkinter
 from tkinter import ttk
 from tkinter import messagebox
 import tkinter.messagebox
+import openpyxl
+import os
+import sqlite3
 #functions
 def enter_data():
     accepted=accept_var.get()
     if accepted=="Accepted":
-    #user info
+        #user info
         fname=first_name_entry.get()
         lname=last_name_entry.get()
         if fname and lname:
@@ -21,7 +24,35 @@ def enter_data():
             print("First name:",fname, "Last name:",lname)
             print("Title:",title, "Age:",age)
             print("#Courses: ",numcourses,"# Semesters: ",numsemesters)
-            print("Registeration Status: ",reg_status_var)
+            print("Registeration Status: ",registered_status)
+            # CONNECTED WITH EXCEL FILE
+            # filepath = r"C:\Users\sarik\Desktop\Tkinter tutorials\data_entry.xlsx"
+            # if not os.path.exists(filepath):
+            #     workbook = openpyxl.Workbook()
+            #     sheet = workbook.active
+            #     heading = ["First Name", "Last Name", "Title", "Age", "Nationality", "#courses", "#Semesters", "Registration status"]
+            #     sheet.append(heading)
+            #     workbook.save(filepath)
+            # workbook=openpyxl.load_workbook(filepath)
+            # sheet=workbook.active
+            # sheet.append([fname,lname,title,age,nationality,numcourses,numsemesters,registered_status])   
+            # workbook.save(filepath) 
+
+            #connect with database
+            #create table
+            conn=sqlite3.connect('data.db')
+            table_create_query='''CREATE TABLE IF NOT EXISTS Student_Data(fname TEXT,lname TEXT,title TEXT,age INT,nationality TEXT,numcourses INT,numsemesters INT,
+            registered_status TEXT)
+            '''
+            conn.execute(table_create_query)
+            #insert data
+            data_insert_query='''INSERT INTO Student_Data(fname,lname,title,age,nationality,numcourses,numsemesters,registered_status)
+            VALUES(?,?,?,?,?,?,?,?)'''
+            data_insert_tuple=(fname,lname,title,age,nationality,numcourses,numsemesters,registered_status)
+            cursor=conn.cursor()
+            cursor.execute(data_insert_query,data_insert_tuple)
+            conn.commit()
+            conn.close()
         else:
             tkinter.messagebox.showwarning(title="Error",message="Enter First Name and Last Name")   
     else: 
@@ -87,7 +118,7 @@ for widget in course_frame.winfo_children():
 terms_frame=tkinter.LabelFrame(frame,text="Terms & Conditions")
 terms_frame.grid(row=2,column=0,sticky="news", padx=20,pady=10)
 accept_var=tkinter.StringVar(value="Not Accepted")
-terms_check=tkinter.Checkbutton(terms_frame,text="I accept the terms and conditions.",variable="Accepted",offvalue="Not Available")
+terms_check=tkinter.Checkbutton(terms_frame,text="I accept the terms and conditions.",variable=accept_var, onvalue="Accepted",offvalue="Not Available")
 terms_check.grid(row=0,column=0)
 
 
