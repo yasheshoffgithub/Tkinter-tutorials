@@ -3,7 +3,7 @@ from tkinter import ttk
 import openpyxl
 
 def load_data():
-    path=r"C:\Users\sarik\Desktop\Tkinter tutorials\list-countries-world.xlsx"
+    path=r"C:\Users\yps12\Downloads\Coding\Tkinter tutorials\list-countries-world.xlsx"
     workbook=openpyxl.load_workbook(path)
     sheet=workbook.active
     list_values=list(sheet.values)

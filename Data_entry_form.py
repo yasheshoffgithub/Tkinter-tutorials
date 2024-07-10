@@ -25,34 +25,34 @@ def enter_data():
             print("Title:",title, "Age:",age)
             print("#Courses: ",numcourses,"# Semesters: ",numsemesters)
             print("Registeration Status: ",registered_status)
-            # CONNECTED WITH EXCEL FILE
-            # filepath = r"C:\Users\sarik\Desktop\Tkinter tutorials\data_entry.xlsx"
-            # if not os.path.exists(filepath):
-            #     workbook = openpyxl.Workbook()
-            #     sheet = workbook.active
-            #     heading = ["First Name", "Last Name", "Title", "Age", "Nationality", "#courses", "#Semesters", "Registration status"]
-            #     sheet.append(heading)
-            #     workbook.save(filepath)
-            # workbook=openpyxl.load_workbook(filepath)
-            # sheet=workbook.active
-            # sheet.append([fname,lname,title,age,nationality,numcourses,numsemesters,registered_status])   
-            # workbook.save(filepath) 
+            #CONNECTED WITH EXCEL FILE
+            filepath = r"C:\Users\yps12\Downloads\Coding\Tkinter tutorials\data_entry.xlsx"
+            if not os.path.exists(filepath):
+                workbook = openpyxl.Workbook()
+                sheet = workbook.active
+                heading = ["First Name", "Last Name", "Title", "Age", "Nationality", "#courses", "#Semesters", "Registration status"]
+                sheet.append(heading)
+                workbook.save(filepath)
+            workbook=openpyxl.load_workbook(filepath)
+            sheet=workbook.active
+            sheet.append([fname,lname,title,age,nationality,numcourses,numsemesters,registered_status])   
+            workbook.save(filepath) 
 
             #connect with database
             #create table
-            conn=sqlite3.connect('data.db')
-            table_create_query='''CREATE TABLE IF NOT EXISTS Student_Data(fname TEXT,lname TEXT,title TEXT,age INT,nationality TEXT,numcourses INT,numsemesters INT,
-            registered_status TEXT)
-            '''
-            conn.execute(table_create_query)
-            #insert data
-            data_insert_query='''INSERT INTO Student_Data(fname,lname,title,age,nationality,numcourses,numsemesters,registered_status)
-            VALUES(?,?,?,?,?,?,?,?)'''
-            data_insert_tuple=(fname,lname,title,age,nationality,numcourses,numsemesters,registered_status)
-            cursor=conn.cursor()
-            cursor.execute(data_insert_query,data_insert_tuple)
-            conn.commit()
-            conn.close()
+            # conn=sqlite3.connect('data.db')
+            # table_create_query='''CREATE TABLE IF NOT EXISTS Student_Data(fname TEXT,lname TEXT,title TEXT,age INT,nationality TEXT,numcourses INT,numsemesters INT,
+            # registered_status TEXT)
+            # '''
+            # conn.execute(table_create_query)
+            # #insert data
+            # data_insert_query='''INSERT INTO Student_Data(fname,lname,title,age,nationality,numcourses,numsemesters,registered_status)
+            # VALUES(?,?,?,?,?,?,?,?)'''
+            # data_insert_tuple=(fname,lname,title,age,nationality,numcourses,numsemesters,registered_status)
+            # cursor=conn.cursor()
+            # cursor.execute(data_insert_query,data_insert_tuple)
+            # conn.commit()
+            # conn.close()
         else:
             tkinter.messagebox.showwarning(title="Error",message="Enter First Name and Last Name")   
     else: 
